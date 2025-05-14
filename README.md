@@ -30,7 +30,7 @@ npm run start-dev
 
 ## 6. API:
 ```
-import API from 'billeasy-assignment.postman_collection.json' then execute APIs:
+import API from 'src/APIDoc/billeasy-assignment.postman_collection.json' then execute APIs:
 1. Register User
 2. Login User
 3. Upload file(Please select your file)
