@@ -1,4 +1,4 @@
-const { status: { OK, BAD_REQUEST, NOT_FOUND } } = require('http-status');
+const { status: { OK, BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } } = require('http-status');
 const models = require('../database/models');
 const fileQueue = require('../queues/fileProcessor');
 
@@ -42,7 +42,8 @@ const upload = async (req) => {
     return { code: OK, message: 'success', data };
 }
 
-const findById = async (id) => {
+const findById = async (id, userId) => {
+    console.log()
     let file = await models.file.findOne({
         where: { id },
         include: [
@@ -56,6 +57,10 @@ const findById = async (id) => {
 
     if (!file) {
         return { code: NOT_FOUND, message: 'File not found' };
+    }
+
+    if (file.user_id !== userId) {
+        return { code: UNAUTHORIZED, message: 'You cannot access someone else uploaded file' };
     }
     return { code: OK, data: file };
 }

@@ -13,8 +13,9 @@ class FileController {
 
     static async findById(req, res) {
         try {
+            const { loggedInUser } = req;
             const { id } = req.params;
-            const response = await fileServices.findById(id);
+            const response = await fileServices.findById(id, loggedInUser.id);
             return res.status(response.code).send(response);
         } catch (error) {
             return res.status(INTERNAL_SERVER_ERROR).send({ error });
